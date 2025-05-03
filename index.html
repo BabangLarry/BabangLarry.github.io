@@ -1,0 +1,570 @@
+<html class="scroll-smooth" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Premium TikTok Downloader | No Watermark HD
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom scrollbar for better UX */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #fe2c55;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #e61a4b;
+      }
+      /* Toast animation */
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, 20px);
+        }
+        10%,
+        90% {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, 20px);
+        }
+      }
+      .animate-fadeInOut {
+        animation: fadeInOut 4s ease forwards;
+      }
+      .animate-fadeOut {
+        opacity: 0 !important;
+        transform: translate(-50%, 20px) !important;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+  </style>
+ </head>
+ <body class="bg-gradient-to-b from-pink-50 to-pink-100 text-gray-900 selection:bg-pink-500 selection:text-white">
+  <div class="min-h-screen flex flex-col">
+   <!-- Header / Hero Section -->
+   <header class="bg-white shadow-md">
+    <div class="container mx-auto px-5 py-12 flex flex-col items-center text-center">
+     <div class="flex items-center gap-4 text-pink-600 mb-4">
+      <i class="fab fa-tiktok text-7xl drop-shadow-lg">
+      </i>
+      <h1 class="text-5xl font-extrabold tracking-tight drop-shadow-md">
+       TikDown Pro
+      </h1>
+     </div>
+     <p class="max-w-xl text-xl font-semibold text-pink-700 opacity-90 leading-relaxed">
+      Download TikTok Videos Without Watermark in HD Quality - Fast, Free &amp; Unlimited
+     </p>
+    </div>
+   </header>
+   <!-- Visitor Counter -->
+   <section class="bg-white border-b border-pink-200 shadow-sm">
+    <div class="container mx-auto px-5 py-4 flex flex-col md:flex-row items-center justify-center gap-4">
+     <div class="flex items-center gap-3 text-pink-600 font-semibold text-lg select-none">
+      <i class="fas fa-users text-2xl drop-shadow-sm">
+      </i>
+      <span aria-atomic="true" aria-live="polite" id="visitorCount">
+       Visitors: 0
+      </span>
+     </div>
+    </div>
+   </section>
+   <!-- Main Content -->
+   <main class="flex-grow container mx-auto px-5 py-12 max-w-5xl">
+    <!-- Downloader Section -->
+    <section aria-label="TikTok Video Downloader" class="bg-white rounded-3xl shadow-2xl p-10 mb-16 border border-pink-200">
+     <h2 class="text-4xl font-extrabold text-pink-600 mb-12 text-center relative after:block after:w-24 after:h-1 after:bg-gradient-to-r after:from-pink-500 after:to-pink-700 after:rounded after:mx-auto after:mt-4 drop-shadow-md">
+      TikTok Video Downloader
+     </h2>
+     <form class="max-w-4xl mx-auto" id="downloadForm" novalidate="">
+      <div class="flex flex-col sm:flex-row gap-6">
+       <input aria-label="TikTok video URL" class="flex-grow rounded-3xl border border-pink-300 px-6 py-4 text-gray-900 placeholder-pink-400 focus:outline-none focus:ring-4 focus:ring-pink-400 focus:border-pink-500 text-lg shadow-md transition" id="tiktokUrl" name="tiktokUrl" placeholder="Paste TikTok video link here..." required="" type="url"/>
+       <button class="bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-extrabold rounded-3xl px-8 py-4 flex items-center justify-center gap-4 shadow-lg transition focus:outline-none focus:ring-4 focus:ring-pink-400" id="processBtn" type="submit">
+        <i class="fas fa-download text-xl">
+        </i>
+        Download
+       </button>
+      </div>
+     </form>
+     <div aria-busy="true" aria-live="polite" class="hidden mt-16 text-center" id="loading" role="status">
+      <svg aria-hidden="true" class="animate-spin mx-auto h-14 w-14 text-pink-600 drop-shadow-lg" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+       </circle>
+       <path class="opacity-75" d="M4 12a8 8 0 018-8v8H4z" fill="currentColor">
+       </path>
+      </svg>
+      <p class="mt-6 text-pink-700 font-semibold text-lg drop-shadow-md">
+       Processing your video...
+      </p>
+     </div>
+     <article aria-live="polite" class="hidden mt-16 bg-white rounded-3xl shadow-2xl overflow-hidden border border-pink-200" id="resultContainer">
+      <header class="flex items-center gap-6 p-6 border-b border-pink-200 bg-pink-50 rounded-t-3xl">
+       <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-4 border-pink-600 shadow-md">
+        <img alt="User avatar" class="w-full h-full object-cover" height="64" id="userAvatar" onerror="this.src='https://placehold.co/64x64/png?text=User'" src="https://storage.googleapis.com/a1aa/image/02c7a333-79b6-4a0d-787c-a6d5f3bad80e.jpg" width="64"/>
+       </div>
+       <div class="flex flex-col overflow-hidden">
+        <h3 class="font-extrabold text-2xl truncate text-pink-700" id="userName" title="User Name">
+         Loading...
+        </h3>
+        <p class="text-pink-600 font-semibold truncate text-lg" id="userUsername" title="User Username">
+         @username
+        </p>
+       </div>
+      </header>
+      <div class="relative w-full" style="padding-top: 177.78%;">
+       <video aria-label="TikTok video preview" class="absolute top-0 left-0 w-full h-full object-contain bg-black rounded-b-3xl" controls="" id="videoPreview" playsinline="">
+       </video>
+      </div>
+      <section class="p-8">
+       <p class="text-gray-800 mb-6 text-lg leading-relaxed whitespace-pre-line" id="videoCaption">
+        No caption available
+       </p>
+       <div aria-label="Video hashtags" class="flex flex-wrap gap-4" id="hashtags">
+       </div>
+      </section>
+      <footer class="flex flex-col sm:flex-row gap-6 p-6 bg-pink-50 border-t border-pink-200 rounded-b-3xl justify-center">
+       <button aria-label="Download MP3 audio" class="action-btn bg-pink-300 text-pink-900 font-extrabold rounded-3xl px-8 py-4 flex items-center justify-center gap-3 hover:bg-pink-400 shadow-md transition focus:outline-none focus:ring-4 focus:ring-pink-300" id="audioBtn" style="display:none" type="button">
+        <i class="fas fa-music text-xl">
+        </i>
+        Download MP3
+       </button>
+       <button aria-label="Download video" class="action-btn bg-gradient-to-r from-pink-600 to-pink-700 text-white font-extrabold rounded-3xl px-8 py-4 flex items-center justify-center gap-3 hover:from-pink-700 hover:to-pink-800 shadow-lg transition focus:outline-none focus:ring-4 focus:ring-pink-300" id="downloadBtn" type="button">
+        <i class="fas fa-download text-xl">
+        </i>
+        Download Video
+       </button>
+      </footer>
+     </article>
+    </section>
+    <!-- Features Section -->
+    <section aria-label="Features of TikTok Downloader" class="bg-white rounded-3xl shadow-2xl p-12 mb-20 border border-pink-200 max-w-7xl mx-auto">
+     <h2 class="text-4xl font-extrabold text-pink-600 mb-14 text-center relative after:block after:w-28 after:h-1 after:bg-gradient-to-r after:from-pink-500 after:to-pink-700 after:rounded after:mx-auto after:mt-5 drop-shadow-md">
+      Why Choose Our TikTok Downloader
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-infinity">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        Unlimited Downloads
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        Download as many TikTok videos as you want without any restrictions. No daily limits, no paywalls.
+       </p>
+      </article>
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-tint-slash">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        No Watermark
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        Get clean TikTok videos without the annoying watermark or logo. Perfect for reposting or content creation.
+       </p>
+      </article>
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-hd">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        HD Quality
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        Download videos in the highest available quality. Preserve all the details of the original content.
+       </p>
+      </article>
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-bolt">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        Super Fast
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        Our optimized servers deliver your downloads at lightning speed, no matter where you are.
+       </p>
+      </article>
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-shield-alt">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        100% Safe
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        No malware, no viruses, no shady practices. Your privacy and security are our top priority.
+       </p>
+      </article>
+      <article class="bg-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 cursor-default select-none">
+       <div class="text-pink-600 text-6xl mb-7 text-center drop-shadow-md">
+        <i class="fas fa-mobile-alt">
+        </i>
+       </div>
+       <h3 class="text-2xl font-extrabold mb-4 text-center text-pink-700 drop-shadow-sm">
+        Mobile Friendly
+       </h3>
+       <p class="text-pink-800 text-center text-lg leading-relaxed">
+        Works perfectly on all devices - smartphones, tablets, and desktop computers.
+       </p>
+      </article>
+     </div>
+    </section>
+    <!-- How It Works Section -->
+    <section aria-label="How to download TikTok videos" class="bg-white rounded-3xl shadow-2xl p-12 max-w-3xl mx-auto mb-20 border border-pink-200">
+     <h2 class="text-4xl font-extrabold text-pink-600 mb-14 text-center relative after:block after:w-24 after:h-1 after:bg-gradient-to-r after:from-pink-500 after:to-pink-700 after:rounded after:mx-auto after:mt-5 drop-shadow-md">
+      How To Download TikTok Videos
+     </h2>
+     <ol class="space-y-10 list-decimal list-inside text-pink-800 text-xl font-semibold leading-relaxed">
+      <li>
+       <h3 class="mb-3 text-pink-700 drop-shadow-sm">
+        Copy TikTok Video Link
+       </h3>
+       <p class="font-normal text-pink-900">
+        Open the TikTok app, find the video you want to download, tap "Share", then "Copy link".
+       </p>
+      </li>
+      <li>
+       <h3 class="mb-3 text-pink-700 drop-shadow-sm">
+        Paste Link in Our Downloader
+       </h3>
+       <p class="font-normal text-pink-900">
+        Paste the TikTok video URL in the input field above and click the download button.
+       </p>
+      </li>
+      <li>
+       <h3 class="mb-3 text-pink-700 drop-shadow-sm">
+        Download Without Watermark
+       </h3>
+       <p class="font-normal text-pink-900">
+        Choose your preferred format (MP4 or MP3) and your video will download instantly in HD quality.
+       </p>
+      </li>
+     </ol>
+    </section>
+   </main>
+   <!-- Footer -->
+   <footer class="bg-pink-600 text-pink-50 py-8 text-center text-sm select-none drop-shadow-lg">
+    <p>
+     © 2023 TikDown Pro. All rights reserved.
+    </p>
+    <p>
+     The easiest way to download TikTok videos without watermark
+    </p>
+   </footer>
+  </div>
+  <!-- Join WhatsApp Group Modal (shows on page load) -->
+  <div aria-labelledby="joinGroupTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 z-50" id="joinGroupModal" role="dialog" tabindex="-1">
+   <div class="bg-white rounded-3xl max-w-md w-full p-8 relative shadow-2xl border border-pink-300">
+    <button aria-label="Close join group dialog" class="absolute top-5 right-5 text-pink-600 hover:text-pink-800 transition focus:outline-none" id="closeJoinGroupBtn" title="Close">
+     <i class="fas fa-times text-3xl">
+     </i>
+    </button>
+    <h2 class="text-3xl font-extrabold text-pink-700 mb-6 text-center drop-shadow-md" id="joinGroupTitle">
+     Join Our WhatsApp Group
+    </h2>
+    <p class="mb-8 text-pink-800 text-center text-lg leading-relaxed">
+     Stay updated with the latest TikTok downloader features, tips, and exclusive content by joining our WhatsApp community.
+    </p>
+    <div class="flex justify-center">
+     <a class="bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-extrabold rounded-3xl px-10 py-4 flex items-center gap-4 shadow-lg transition focus:outline-none focus:ring-4 focus:ring-pink-400" href="https://chat.whatsapp.com/HaXLRoUQM1C9eG0iJ4DuOX" id="joinGroupLink" rel="noopener noreferrer" target="_blank" type="button">
+      <i class="fab fa-whatsapp text-3xl drop-shadow-lg">
+      </i>
+      Join WhatsApp Group
+     </a>
+    </div>
+   </div>
+  </div>
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+      const processBtn = document.getElementById('processBtn');
+      const tiktokUrl = document.getElementById('tiktokUrl');
+      const loading = document.getElementById('loading');
+      const resultContainer = document.getElementById('resultContainer');
+      const videoPreview = document.getElementById('videoPreview');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const audioBtn = document.getElementById('audioBtn');
+      const userName = document.getElementById('userName');
+      const userUsername = document.getElementById('userUsername');
+      const userAvatar = document.getElementById('userAvatar');
+      const videoCaption = document.getElementById('videoCaption');
+      const hashtags = document.getElementById('hashtags');
+      const downloadForm = document.getElementById('downloadForm');
+
+      // Visitor count element
+      const visitorCountEl = document.getElementById('visitorCount');
+
+      // Join group modal elements
+      const joinGroupModal = document.getElementById('joinGroupModal');
+      const closeJoinGroupBtn = document.getElementById('closeJoinGroupBtn');
+      const joinGroupLink = document.getElementById('joinGroupLink');
+
+      // Visitor count logic (simple localStorage + increment)
+      function updateVisitorCount() {
+        try {
+          let count = localStorage.getItem('visitorCount');
+          if (!count) {
+            count = 1;
+          } else {
+            count = parseInt(count) + 1;
+          }
+          localStorage.setItem('visitorCount', count);
+          visitorCountEl.textContent = `Visitors: ${count.toLocaleString()}`;
+        } catch {
+          // fallback if localStorage not available
+          visitorCountEl.textContent = `Visitors: 1`;
+        }
+      }
+      updateVisitorCount();
+
+      // Modal close handlers
+      closeJoinGroupBtn.addEventListener('click', () => {
+        joinGroupModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+      joinGroupModal.addEventListener('click', (e) => {
+        if (e.target === joinGroupModal) {
+          joinGroupModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+      });
+      // Close modal when clicking the join link
+      joinGroupLink.addEventListener('click', () => {
+        joinGroupModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      // Prevent scrolling when modal is open
+      document.body.style.overflow = 'hidden';
+
+      // Trap focus inside modal
+      joinGroupModal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          joinGroupModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+        if (e.key === 'Tab') {
+          const focusableElements = joinGroupModal.querySelectorAll(
+            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+          );
+          const firstElement = focusableElements[0];
+          const lastElement = focusableElements[focusableElements.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+      });
+
+      // Form submit handler
+      downloadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        processVideo();
+      });
+
+      function processVideo() {
+        const url = tiktokUrl.value.trim();
+
+        // Reset UI
+        resultContainer.classList.add('hidden');
+        videoPreview.pause();
+        videoPreview.removeAttribute('src');
+        audioBtn.style.display = 'none';
+        downloadBtn.removeAttribute('data-video-url');
+        audioBtn.removeAttribute('data-audio-url');
+        userName.textContent = 'Loading...';
+        userUsername.textContent = '@username';
+        userAvatar.src = 'https://placehold.co/64x64/png?text=User';
+        videoCaption.textContent = '';
+        hashtags.innerHTML = '';
+
+        // Validate URL
+        if (!url) {
+          showError('Please enter a TikTok URL');
+          return;
+        }
+
+        if (!url.includes('tiktok.com')) {
+          showError('Please enter a valid TikTok URL');
+          return;
+        }
+
+        // Show loading
+        loading.classList.remove('hidden');
+
+        // Call API
+        const apiUrl = `https://nabzxapibot.vercel.app/api/download/tiktokdl?url=${encodeURIComponent(
+          url
+        )}`;
+
+        fetch(apiUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            loading.classList.add('hidden');
+
+            if (data.status && data.result.video_nowm) {
+              // Display video
+              videoPreview.src = data.result.video_nowm;
+              downloadBtn.setAttribute('data-video-url', data.result.video_nowm);
+
+              // Set audio URL if available
+              if (data.result.audio_url) {
+                audioBtn.setAttribute('data-audio-url', data.result.audio_url);
+                audioBtn.style.display = 'inline-flex';
+              } else {
+                audioBtn.style.display = 'none';
+              }
+
+              // Set user info
+              setUserInfo(data);
+
+              // Set video caption and hashtags
+              setVideoInfo(data);
+
+              // Show results
+              resultContainer.classList.remove('hidden');
+
+              // Scroll to results
+              resultContainer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              showError('Could not process video. Please check the URL and try again.');
+            }
+          })
+          .catch((error) => {
+            loading.classList.add('hidden');
+            showError('An error occurred: ' + error.message);
+            console.error('Error:', error);
+          });
+      }
+
+      function setUserInfo(data) {
+        // Try to extract user info from API response
+        if (data.result.author) {
+          userName.textContent = data.result.author.nickname || 'TikTok User';
+          userUsername.textContent = `@${data.result.author.unique_id || 'user'}`;
+          if (data.result.author.avatar) {
+            userAvatar.src = data.result.author.avatar;
+          }
+        } else {
+          // Fallback to generic info
+          userName.textContent = 'TikTok User';
+          userUsername.textContent = '@tiktokuser';
+          userAvatar.src = 'https://placehold.co/64x64/png?text=User';
+        }
+      }
+
+      function setVideoInfo(data) {
+        // Set video caption
+        if (data.result.description) {
+          videoCaption.textContent = data.result.description;
+
+          // Extract hashtags from description
+          const hashtagMatches = data.result.description.match(/#\w+/g) || [];
+          hashtags.innerHTML = '';
+
+          hashtagMatches.forEach((tag) => {
+            const span = document.createElement('span');
+            span.className =
+              'text-pink-600 bg-pink-100 rounded-full px-4 py-2 text-base font-semibold select-text shadow-sm';
+            span.textContent = tag;
+            hashtags.appendChild(span);
+          });
+        } else {
+          videoCaption.textContent = 'No caption available';
+          hashtags.innerHTML =
+            '<span class="text-pink-600 bg-pink-100 rounded-full px-4 py-2 text-base font-semibold select-text shadow-sm">#tiktok</span>';
+        }
+      }
+
+      function downloadVideo() {
+        const videoUrl = downloadBtn.getAttribute('data-video-url');
+        if (videoUrl) {
+          // Create invisible anchor to trigger download
+          const a = document.createElement('a');
+          a.href = videoUrl;
+          a.download = `tiktok_${Date.now()}.mp4`;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      }
+
+      function downloadAudio() {
+        const audioUrl = audioBtn.getAttribute('data-audio-url');
+        if (audioUrl) {
+          // Create invisible anchor to trigger download
+          const a = document.createElement('a');
+          a.href = audioUrl;
+          a.download = `tiktok_audio_${Date.now()}.mp3`;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      }
+
+      function showError(message) {
+        // Custom toast style error
+        if (document.getElementById('toastError')) {
+          document.getElementById('toastError').remove();
+        }
+        const toast = document.createElement('div');
+        toast.id = 'toastError';
+        toast.setAttribute('role', 'alert');
+        toast.className =
+          'fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-3xl shadow-lg flex items-center gap-4 z-50 animate-fadeInOut select-none font-semibold text-lg';
+        toast.textContent = message;
+
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-exclamation-circle text-2xl';
+        toast.prepend(icon);
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.classList.add('animate-fadeOut');
+          setTimeout(() => {
+            toast.remove();
+          }, 500);
+        }, 3500);
+      }
+
+      downloadBtn.addEventListener('click', downloadVideo);
+      audioBtn.addEventListener('click', downloadAudio);
+    });
+  </script>
+ </body>
+</html>
